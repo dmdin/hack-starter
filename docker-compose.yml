@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+  #  memcached:
+  #    image: memcached:latest
+  #    ports:
+  #      - "11211:11211"
+
+  frontend:
+    build: "./frontend"
+    ports:
+      - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.front.entryPoints=https"
+      - "traefik.http.routers.front.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.front.tls.certResolver=letsEncrypt"
+
+  backend:
+    build: "./backend"
+    environment:
+      - DOMAIN=b.${DOMAIN}
+    volumes:
+      - ./backend:/app/backend
+    ports:
+      - "8000:8000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.entryPoints=https"
+      - "traefik.http.routers.backend.rule=Host(`b.${DOMAIN}`)"
+      - "traefik.http.routers.backend.tls.certResolver=letsEncrypt"
+
+  traefik:
+    image: traefik:v2.4
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yml:/traefik.yml:ro
+      - ./traefik/acme.json:/acme.json
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.entryPoints=https"
+      - "traefik.http.routers.traefik.rule=Host(`t.${DOMAIN}`)"
+      - "traefik.http.routers.traefik.tls.certResolver=letsEncrypt"
+      - "traefik.http.routers.traefik.service=api@internal"
+#      - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$$apr1$$OHsymSWA$$FcWFxYK.9iH8Ny/FlJ8pv1"
+#      - "traefik.http.routers.traefik.middlewares=traefik-auth"

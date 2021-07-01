@@ -1,0 +1,10 @@
+.vscode
+.idea
+.DS_Store
+node_modules
+/.svelte-kit
+/package
+.svelte-kit
+build
+yarn.lock
+pnpm-lock.yaml

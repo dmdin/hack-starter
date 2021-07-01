@@ -1,0 +1,41 @@
+api:
+  dashboard: true
+
+entryPoints:
+  http:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: https
+          scheme: https
+  https:
+    address: ":443"
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+
+http:
+  routers:
+    http-catchall:
+      rule: HostRegexp(`{host:.+}`)
+      entrypoints:
+        - http
+      middlewares:
+        - redirect-to-https
+  middlewares:
+    redirect-to-https:
+      redirectScheme:
+        scheme: https
+        permanent: true
+
+certificatesResolvers:
+  letsEncrypt:
+    acme:
+      email: dmitriy1d01@gmail.com
+      storage: acme.json
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      httpChallenge:
+        entryPoint: http
