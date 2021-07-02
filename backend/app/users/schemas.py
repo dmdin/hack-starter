@@ -22,6 +22,11 @@ class Token(BaseModel):
     token_type: str
 
 
+class UserData(BaseModel):
+    username: str
+    password: str
+
+
 class PublicHash(BaseModel):
     hash: str
 
