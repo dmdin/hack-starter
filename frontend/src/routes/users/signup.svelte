@@ -8,17 +8,16 @@
 </script>
 
 <script>
-  import {fetches, storeInitValues} from '$lib/api';
-  import {writable} from 'svelte/store';
   import {get} from 'svelte/store';
   import {goto} from '$app/navigation';
+  import {bridge} from "$lib/shared";
 
   let username = '';
   let password = '';
   let confirm = '';
   let errorMessage = null;
   let errors = {username: false, password: false, confirm: false}
-  let rsp = writable(storeInitValues);
+  let rsp = bridge.createStore();
 
   // rsp.subscribe(v => console.log(v.loading))
 
@@ -54,8 +53,9 @@
 
   async function submit() {
     if (!validate()) return;
-    rsp = fetches.post({path: 'users/create', json: {username, password}, cache: false, store: rsp});
-    console.log('lala', await $rsp.promise, $rsp.loading, $rsp.data);
+    rsp = bridge.post({path: 'users/create', json: {username, password}, cache: false, store: rsp});
+    await $rsp.promise
+    console.log('lala', $rsp.loading, $rsp.data);
     // goto('/users/self')
   }
 
@@ -84,10 +84,15 @@
         <h3>{errorMessage}</h3>
       {/if}
       <button on:click={submit}>Зарегистрироваться</button>
+      {#if $rsp.loading}
+        <h1>Loading Sync</h1>
+      {:else}
+        <p>{JSON.stringify($rsp.data)}</p>
+      {/if}
       {#await $rsp.promise}
-        <h1>Loading</h1>
+        <h1>Loading Promise</h1>
       {:then ready}
-        <h1>{JSON.stringify(ready)}</h1>
+        <p>{JSON.stringify(ready)}</p>
       {/await}
     </div>
   </div>

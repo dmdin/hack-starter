@@ -1,10 +1,9 @@
 import {Writable, writable} from 'svelte/store';
-import {get as getCookie} from './cookies';
+
 
 export const apiUrl = 'http://localhost:8000/';
-const cookieTokenName = 'token';
 
-interface FetchParams {
+export interface FetchParams {
   path?: string
   query?: any
   json?: any
@@ -13,7 +12,7 @@ interface FetchParams {
   store?: Writable<any>
 }
 
-enum Methods {
+export enum Methods {
   get = 'get', post = 'post', put = 'put', delete = 'delete'
 }
 
@@ -36,18 +35,12 @@ export const fetches = {
   },
 }
 
-interface Request {
-  method: Methods,
-  headers: { Accept, Authorization?: string | undefined, 'Content-Type' },
-  body?: string
-}
-
-interface StoreFetchParams extends FetchParams {
+export interface StoreFetchParams extends FetchParams {
   url: URL
   method: Methods
 }
 
-interface StoreFetchResult {
+export interface StoreFetchResult {
   promise: Promise<any>
   data: any
   loading: boolean
@@ -63,9 +56,14 @@ export const storeInitValues: StoreFetchResult = {
   ready: false
 }
 
+interface Request {
+  method: Methods,
+  headers: { Accept, Authorization?: string | undefined, 'Content-Type' },
+  body?: string
+}
+
 export function storeFetch(params: StoreFetchParams): Writable<StoreFetchResult> {
-  const {url, method, path, json = {}, store = writable(), cache = true} = params;
-  let {token = undefined} = params;
+  const {url, token, method, path, json = {}, store = writable(), cache = true} = params;
   // TODO add query params
   store.set(storeInitValues);
   const saved = localStorage.getItem(url.href);
@@ -84,9 +82,6 @@ export function storeFetch(params: StoreFetchParams): Writable<StoreFetchResult>
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-    }
-    if (!token) {
-      token = getCookie(cookieTokenName);
     }
     if (token) {
       headers['Authorization'] = 'Bearer ' + token;
