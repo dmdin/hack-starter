@@ -41,19 +41,18 @@ export interface StoreFetchParams extends FetchParams {
 }
 
 export interface StoreFetchResult {
+  savedResolve: undefined
   promise: Promise<any>
   data: any
   loading: boolean
   ready: boolean
 }
 
-export const storeInitValues: StoreFetchResult = {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  promise: new Promise(() => {
-  }),
-  data: undefined,
-  loading: true,
-  ready: false
+export function initValues(): StoreFetchResult {
+  // Save Resolve, because Promise.resolve creates new Promise, that lags with js await
+  let savedResolve;
+  const promise = new Promise((resolve) => savedResolve = resolve);
+  return {savedResolve, promise, data: undefined, loading: true, ready: false}
 }
 
 interface Request {
@@ -65,7 +64,7 @@ interface Request {
 export function storeFetch(params: StoreFetchParams): Writable<StoreFetchResult> {
   const {url, token, method, path, json = {}, store = writable(), cache = true} = params;
   // TODO add query params
-  store.set(storeInitValues);
+  store.set(initValues());
   const saved = localStorage.getItem(url.href);
   const cached = saved && JSON.parse(saved);
   if (cache && cached) {
@@ -73,7 +72,7 @@ export function storeFetch(params: StoreFetchParams): Writable<StoreFetchResult>
     store.update(obj => {
       obj.data = cached;
       obj.ready = true;
-      obj.promise = Promise.resolve(cached);
+      obj.promise = obj.savedResolve(cached);
       return obj;
     });
   }
@@ -107,7 +106,7 @@ export function storeFetch(params: StoreFetchParams): Writable<StoreFetchResult>
     store.update(obj => {
       obj.data = data;
       obj.ready = true;
-      obj.promise = Promise.resolve(data);
+      obj.promise = obj.savedResolve(data);
       obj.loading = false;
       return obj;
     });

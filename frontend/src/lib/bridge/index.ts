@@ -1,4 +1,4 @@
-import {FetchParams, Methods, storeFetch, storeInitValues} from './customFetch';
+import {FetchParams, initValues, Methods, storeFetch} from './customFetch';
 import {writable} from "svelte/store";
 
 export class Bridge {
@@ -11,7 +11,7 @@ export class Bridge {
   }
 
   createStore() {
-    return writable(storeInitValues)
+    return writable(initValues())
   }
 
   get(params: FetchParams) {

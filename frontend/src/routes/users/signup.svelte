@@ -19,8 +19,6 @@
   let errors = {username: false, password: false, confirm: false}
   let rsp = bridge.createStore();
 
-  // rsp.subscribe(v => console.log(v.loading))
-
   function validate() {
     if (username === '') {
       errorMessage = 'Введите E-mail';
@@ -53,9 +51,15 @@
 
   async function submit() {
     if (!validate()) return;
-    rsp = bridge.post({path: 'users/create', json: {username, password}, cache: false, store: rsp});
-    await $rsp.promise
-    console.log('lala', $rsp.loading, $rsp.data);
+    bridge.post({path: 'users/create', json: {username, password}, cache: false, store: rsp});
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    let data = await $rsp.promise;
+    console.log(data);
+
+    if ($rsp.detail === 'User already exists') {
+      errorMessage = 'Пользователь с такой почтой уже зарегистрирован'
+      errors.username = true;
+    }
     // goto('/users/self')
   }
 
@@ -84,16 +88,6 @@
         <h3>{errorMessage}</h3>
       {/if}
       <button on:click={submit}>Зарегистрироваться</button>
-      {#if $rsp.loading}
-        <h1>Loading Sync</h1>
-      {:else}
-        <p>{JSON.stringify($rsp.data)}</p>
-      {/if}
-      {#await $rsp.promise}
-        <h1>Loading Promise</h1>
-      {:then ready}
-        <p>{JSON.stringify(ready)}</p>
-      {/await}
     </div>
   </div>
 </div>
