@@ -24,7 +24,6 @@ export const handle: Handle = async ({request, resolve}) => {
 
 export function getSession(request) {
 	return {
-		role: request.locals.role,
 		token: request.locals.token
 	}
 }

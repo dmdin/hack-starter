@@ -1,17 +1,15 @@
 <script context='module'>
   export function load({session}) {
-    if (session.token) {
-      return {redirect: '/users/self', status: 301}
-    }
+    // if (session.token) {
+    //   return {redirect: '/users/self', status: 302}
+    // }
     return {}
   }
 </script>
 
 <script>
-  import {get} from 'svelte/store';
-  import {goto} from '$app/navigation';
-  import {bridge} from "$lib/shared";
-  import * as cookie from "$lib/bridge/cookies";
+  import {goto, prefetch} from '$app/navigation';
+  import {bridge, token} from "$lib/shared";
   import {slide} from 'svelte/transition';
 
   let username = '';
@@ -62,7 +60,8 @@
     } else if (!data.access_token) {
       errorMessage = 'Произошла непредвиденная ошибка'
     } else {
-      cookie.set('token', data.access_token, {SameSite: 'Strict'});
+      $token = data.access_token;
+      await prefetch('/users/self');
       goto('/users/self');
     }
   }

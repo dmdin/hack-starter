@@ -1,11 +1,24 @@
+<script context="module">
+  export const load = async ({page}) => ({
+    props: {
+      key: page.path,
+    },
+  })
+</script>
+
 <script lang="ts">
-	import '../app.css';
+  import '../app.css';
+  import PageTransition from '$lib/PageTransition.svelte'
+
+  export let key;
 </script>
 
 <!--<Header/>-->
 
 <main>
-	<slot/>
+  <PageTransition refresh={key}>
+    <slot/>
+  </PageTransition>
 </main>
 
 <!--<footer>-->
@@ -13,27 +26,27 @@
 <!--</footer>-->
 
 <style>
-	main {
-		width: 100%;
-		max-width: 1440px;
-		margin: 0 auto;
-	}
+  main {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
 
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 40px;
-	}
+  footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+  }
 
-	footer a {
-		font-weight: bold;
-	}
+  footer a {
+    font-weight: bold;
+  }
 
-	@media (min-width: 480px) {
-		footer {
-			padding: 40px 0;
-		}
-	}
+  @media (min-width: 480px) {
+    footer {
+      padding: 40px 0;
+    }
+  }
 </style>
