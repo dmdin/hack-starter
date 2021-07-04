@@ -1,13 +1,18 @@
 import {FetchParams, initValues, Methods, storeFetch} from './customFetch';
 import {writable} from "svelte/store";
+import {get as getCookie} from './cookies';
 
 export class Bridge {
   baseUrl: string
-  token: string
+  cookieName: string
 
-  constructor(baseUrl, token = null) {
+  constructor(baseUrl, cookieName = 'token') {
     this.baseUrl = baseUrl;
-    this.token = token;
+    this.cookieName = cookieName;
+  }
+
+  get token() {
+    return getCookie(this.cookieName);
   }
 
   createStore() {

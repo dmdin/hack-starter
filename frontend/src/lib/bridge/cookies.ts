@@ -5,6 +5,9 @@ export function del(name: string): void {
 }
 
 export function get(name: string): string | undefined {
+  if (!document) {
+    return
+  }
   const matches = document.cookie.match(new RegExp(
     '(?:^|; )' + name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + '=([^;]*)'
   ));
@@ -12,6 +15,10 @@ export function get(name: string): string | undefined {
 }
 
 export function set(name: string, value: string, options: any = {}): void {
+  if (!document) {
+    return
+  }
+
   options = {
     path: '/',
     ...options

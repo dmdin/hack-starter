@@ -1,3 +1,3 @@
 import {Bridge} from '$lib/bridge';
 
-export const bridge = new Bridge('http://localhost:8000')
+export const bridge = new Bridge('http://localhost:8000', 'token')

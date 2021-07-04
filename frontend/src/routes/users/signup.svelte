@@ -1,6 +1,6 @@
 <script context='module'>
   export function load({session}) {
-    if (session.token && session.role) {
+    if (session.token) {
       return {redirect: '/users/self', status: 301}
     }
     return {}
@@ -11,6 +11,8 @@
   import {get} from 'svelte/store';
   import {goto} from '$app/navigation';
   import {bridge} from "$lib/shared";
+  import * as cookie from "$lib/bridge/cookies";
+  import {slide} from 'svelte/transition';
 
   let username = '';
   let password = '';
@@ -53,14 +55,16 @@
     if (!validate()) return;
     bridge.post({path: 'users/create', json: {username, password}, cache: false, store: rsp});
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    let data = await $rsp.promise;
-    console.log(data);
-
-    if ($rsp.detail === 'User already exists') {
+    const data = await $rsp.promise;
+    if (data.detail === 'User already exists') {
       errorMessage = 'Пользователь с такой почтой уже зарегистрирован'
       errors.username = true;
+    } else if (!data.access_token) {
+      errorMessage = 'Произошла непредвиденная ошибка'
+    } else {
+      cookie.set('token', data.access_token, {SameSite: 'Strict'});
+      goto('/users/self');
     }
-    // goto('/users/self')
   }
 
 </script>
@@ -73,9 +77,9 @@
 
   <!-- svelte-ignore a11y-missing-attribute -->
   <img src='https://static.tildacdn.com/tild6362-3166-4430-b466-346266653936/reg.svg' alt='reg-photo'/>
-  <div class='reg-wrapper'>
+  <div class='wrapper'>
     <h1>Регистрация в наш <span class='green'>сервис</span></h1>
-    <div class='inputs'>
+    <div class='form'>
 
       <input on:focus={() => errors.username = false} class:error={errors.username} bind:value={username}
              placeholder='E-mail' type='email'>
@@ -85,9 +89,12 @@
              placeholder='Подтверждение пароля' type='password'>
 
       {#if (errorMessage != null)}
-        <h3>{errorMessage}</h3>
+        <h3 transition:slide|local>{errorMessage}</h3>
       {/if}
-      <button on:click={submit}>Зарегистрироваться</button>
+      <div class="buttons">
+        <button on:click={submit}>Зарегистрироваться</button>
+        <a href="/users/signin">Войти</a>
+      </div>
     </div>
   </div>
 </div>
@@ -112,26 +119,35 @@
   h3 {
     color: #E84855;
     font-weight: 500;
+    text-align: center;
   }
 
   .green {
     color: #43DFA8;
   }
 
-
-  .inputs {
+  .wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
+  .form {
+    display: flex;
+    flex-direction: column;
+    max-width: 360px;
+    width: 100%;
+    /*margin: 0 auto;*/
+    /*align-items: center;*/
+  }
+
   input {
     max-width: 300px;
-    width: 70%;
+    width: 100%;
     height: 48px;
     margin-bottom: 0.5em;
     border-radius: 8px;
-    padding: 0 2em;
+    padding: 0 30px;
     border: 1px solid #E1E3E6;
     transition: all 0.6s ease;
   }
@@ -145,6 +161,22 @@
   .error {
     border-color: #ff2121;
     box-shadow: 0 0 10px rgb(253, 47, 47);
+  }
+
+  a {
+    padding: 0.75em 2em;
+    background: transparent;
+    border: 1px solid #131313;
+    border-radius: 5px;
+    color: #131313;
+    transition: all 0.6s ease;
+  }
+
+  a:hover {
+    outline: none;
+    text-decoration: none;
+    background-color: #43DFA8;
+    border-color: transparent;
   }
 
   button {
@@ -164,6 +196,12 @@
 
   button:focus {
     outline: none;
+  }
+
+  .buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
   }
 
   @media (max-width: 1000px) {
