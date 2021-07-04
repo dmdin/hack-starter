@@ -1,18 +1,21 @@
 <script context='module'>
-  import {token} from '$lib/shared';
-
   export function load({session}) {
-    return {props: session};
+    return {props: {token: session.token}};
   }
 </script>
 
 <script>
   import {goto} from '$app/navigation';
+  import {token as tokenStore} from '$lib/shared';
+
+  export let token;
 
   async function logout() {
-    $token = undefined;
+    $tokenStore = undefined;
     goto('/users/signin');
   }
 </script>
-<p>My token: {$token}</p>
+<p>My token: {token}</p>
+<p>My token: {$tokenStore}</p>
+
 <button on:click={logout}>Logout</button>

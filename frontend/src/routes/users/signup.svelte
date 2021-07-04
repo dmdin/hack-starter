@@ -61,7 +61,7 @@
       errorMessage = 'Произошла непредвиденная ошибка'
     } else {
       $token = data.access_token;
-      await prefetch('/users/self');
+      // await prefetch('/users/self');
       goto('/users/self');
     }
   }
