@@ -22,7 +22,7 @@ $: docker-compose up
 
 ## 🛠 Develop
 
-Prepare your environment. Install packages inside _backend_ and _frontend_ modules. Both parts support __hot-reload__ to
+Prepare your environment. Install packages inside _backend_ and _frontend_ modules. Both parts support __hot-reloading__ to
 maximize the acceleration of development
 
 ## 📜 TODO:
