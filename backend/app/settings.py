@@ -10,7 +10,6 @@ with open(os.path.join(current_path, '.gitignore'), 'r', encoding='utf8') as fil
 folders = list(
     set([folder.replace('\\', '/').replace("app/", "").strip('/') for folder in glob('app/*/')]) - exclude
 )
-
 apps = {
     folder: {
         'models': [f'app.{folder.replace("/", ".")}.models']

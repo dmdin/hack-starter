@@ -1,4 +1,6 @@
+aiofiles==0.7.0
 aiosqlite==0.16.1
+anyio==3.2.1
 asgiref==3.3.4
 bcrypt==3.2.0
 certifi==2021.5.30
@@ -9,6 +11,10 @@ commonmark==0.9.1
 ecdsa==0.17.0
 fastapi==0.65.2
 h11==0.12.0
+httpcore==0.13.6
+httpx==0.18.2
+idna==3.2
+inflect==5.3.0
 iso8601==0.1.14
 Jinja2==3.0.1
 MarkupSafe==2.0.1
@@ -21,9 +27,11 @@ pypika-tortoise==0.1.1
 python-jose==3.3.0
 python-multipart==0.0.5
 pytz==2021.1
+rfc3986==1.5.0
 rich==10.4.0
 rsa==4.7.2
 six==1.16.0
+sniffio==1.2.0
 starlette==0.14.2
 tortoise-orm==0.17.4
 typing-extensions==3.10.0.0

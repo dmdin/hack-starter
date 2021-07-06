@@ -1,74 +1,21 @@
-from datetime import datetime, timedelta
-from typing import Optional
+from datetime import timedelta
 
-from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from jose import jwt, JWTError
-from passlib.context import CryptContext
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 
+from .auth import authenticate_user, create_token, get_user, pwd_context
 from .models import User
 from .schemas import EditUser, PrivateUser, PublicUser, Token, UserData
-from ..settings import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
+from ..settings import ACCESS_TOKEN_EXPIRE_MINUTES
 
 router = APIRouter()
-pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/users/token')
-
-
-async def authenticate_user(username: str, password: str) -> User:
-    user = await User.get_or_none(email=username)
-    exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail='Incorrect username or password',
-        headers={'WWW-Authenticate': 'Bearer'},
-    )
-    if user is None:
-        raise exception
-    if not pwd_context.verify(password, user.hashed_password):
-        raise exception
-    return user
-
-
-async def decode_token(token) -> str:
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail='Could not validate credentials',
-        headers={'WWW-Authenticate': 'Bearer'},
-    )
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get('sub')
-        if username is None:
-            raise credentials_exception
-    except JWTError:
-        raise credentials_exception
-    return username
-
-
-async def get_user(token: str = Depends(oauth2_scheme)) -> User:
-    email = decode_token(token)
-    user = await User.get_or_none(email=email)
-    if user is None:
-        raise HTTPException(404, 'User not found')
-    return user
-
-
-def create_access_token(data, expires_data: Optional[timedelta] = None):
-    to_encode = data.copy()
-    if expires_data is not None:
-        expire = datetime.utcnow() + expires_data
-    else:
-        expire = datetime.utcnow() + timedelta(minutes=30)
-    to_encode.update({'exp': expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, ALGORITHM)
-    return encoded_jwt
 
 
 @router.post('/token', response_model=Token)
 async def get_token(form_data: OAuth2PasswordRequestForm = Depends()):
     user = await authenticate_user(form_data.username, form_data.password)
     expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(data={'sub': user.email}, expires_data=expires)
+    access_token = create_token(data={'sub': user.email}, expires_data=expires)
     return Token(access_token=access_token, token_type='Bearer')
 
 
@@ -76,7 +23,7 @@ async def get_token(form_data: OAuth2PasswordRequestForm = Depends()):
 async def login(login_data: UserData):
     user = await authenticate_user(**login_data.dict())
     expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(data={'sub': user.email}, expires_data=expires)
+    access_token = create_token(data={'sub': user.email}, expires_data=expires)
     return Token(access_token=access_token, token_type='Bearer')
 
 
@@ -91,7 +38,7 @@ async def new_user(reg_data: UserData):
     )
 
     expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    token = create_access_token(data={'sub': user.email}, expires_data=expires)
+    token = create_token(data={'sub': user.email}, expires_data=expires)
     return Token(access_token=token, token_type='Bearer')
 
 

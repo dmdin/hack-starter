@@ -23,6 +23,7 @@ export const handle: Handle = async ({request, resolve}) => {
 };
 
 export function getSession(request) {
+	console.log('Update Session', request.locals)
 	return {
 		token: request.locals.token
 	}

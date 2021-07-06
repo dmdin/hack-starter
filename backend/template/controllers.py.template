@@ -1,0 +1,48 @@
+from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException
+
+from .models import {{Single}}Model
+from .schemas import Create{{Single}}, {{Many}}Schema
+from ..users.auth import get_user
+from ..users.models import User
+
+router = APIRouter()
+
+
+async def check_{{single}}({{single}}_id: str, user: User = Depends(get_user)):
+    {{single}} = await {{Single}}Model.get_or_none(id={{single}}_id)
+    if {{single}} is None:
+        raise HTTPException(404, '{{Single}} not found')
+    if {{single}}.user_id != user.id:
+        raise HTTPException(403, 'User does not have access to this')
+    return {{single}}
+
+
+@router.get('/all', response_model=List[{{Many}}Schema])
+async def get_all():
+    return await {{Many}}Schema.from_queryset({{Single}}Model.all())
+
+
+@router.post('/create', response_model={{Many}}Schema)
+async def create_{{single}}(new_{{single}}: Create{{Single}}, user: User = Depends(get_user)):
+    {{single}} = await {{Single}}Model.create(**new_{{single}}.dict(), user_id=user.id)
+    return await {{Many}}Schema.from_tortoise_orm({{single}})
+
+
+@router.get('/read', response_model=List[{{Many}}Schema])
+async def get_my(user: User = Depends(get_user)):
+    return await {{Many}}Schema.from_queryset(user.{{many}}.all())
+
+
+@router.put('/update', response_model={{Many}}Schema)
+async def edit_{{single}}(edited_{{single}}: Create{{Single}}, {{single}}: {{Single}}Model = Depends(check_{{single}})):
+    await {{single}}.update_from_dict(edited_{{single}}.dict())
+    await {{single}}.save()
+    return await {{Many}}Schema.from_tortoise_orm({{single}})
+
+
+@router.delete('/delete')
+async def delete_{{single}}({{single}}: {{Single}}Model = Depends(check_{{single}})):
+    await {{single}}.delete()
+    return {'ok': True}

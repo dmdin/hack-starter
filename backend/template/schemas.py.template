@@ -1,0 +1,16 @@
+from typing import Any, Optional
+
+from pydantic import BaseModel
+from tortoise.contrib.pydantic import pydantic_model_creator
+
+from .models import {{Single}}Model
+
+{{Many}}Schema = pydantic_model_creator(
+    {{Single}}Model, name='{{Many}}Schema', exclude=(), include=()
+)
+
+
+class Create{{Single}}(BaseModel):
+    name: str
+    desc: str
+    pic: str

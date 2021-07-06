@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 
 from jinja2 import Template
 
-from ..settings import EMAIL_ADDRESS
+from ..settings import EMAIL_ADDRESS, EMAIL_PASSWORD
 
 current_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -25,7 +25,7 @@ def send_mail(link, to_address):
     msg.attach(MIMEText(body, "html"))
 
     server = smtplib.SMTP_SSL("smtp.mail.ru", 465)
-    server.login(EMAIL_ADDRESS, MAIL_PASSWORD)
+    server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
     text = msg.as_string()
     server.sendmail(EMAIL_ADDRESS, to_address, text)
     server.quit()
