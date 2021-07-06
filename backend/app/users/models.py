@@ -1,4 +1,4 @@
-from tortoise import fields, Model, Tortoise
+from tortoise import fields, Model
 
 
 class User(Model):
@@ -20,6 +20,3 @@ class Token(Model):
     id = fields.IntField(pk=True)
     login_token = fields.CharField(max_length=2048)
     is_used = fields.BooleanField(default=False)
-
-
-Tortoise.init_models(["app.users.models"], "users")

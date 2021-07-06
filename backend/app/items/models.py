@@ -1,4 +1,4 @@
-from tortoise import fields, Model, Tortoise
+from tortoise import fields, Model
 
 
 class Item(Model):
@@ -13,6 +13,3 @@ class Item(Model):
 
     class PydanticMeta:
         exclude = ['user']
-
-
-Tortoise.init_models(['app.items.models'], 'items')

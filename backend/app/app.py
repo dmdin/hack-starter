@@ -6,9 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from rich.console import Console
 from tortoise import Tortoise
 
-from .items.controllers import router as items_router
+from . import defaults, items, users
 from .settings import CORS_ORIGINS, DOMAIN, IS_PROD, PROD_TORTOISE_ORM, TEST_TORTOISE_ORM
-from .users.controllers import router as users_router
 
 # print(COLOR_SYSTEMS)
 console = Console(color_system="windows")
@@ -57,8 +56,11 @@ def create_app():
 
     prepare_db()
 
-    app.include_router(users_router, prefix="/users", tags=["Users"])
-    app.include_router(items_router, prefix="/items", tags=["Items"])
+    # Init order is important! Init required apps firstly
+    users.init(app)
+    items.init(app)
+    defaults.init(app)
+
     app.add_event_handler("startup", startup)
     app.add_event_handler("shutdown", shutdown)
 

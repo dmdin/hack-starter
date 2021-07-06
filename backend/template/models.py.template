@@ -13,6 +13,3 @@ class {{Single}}Model(Model):
 
     class PydanticMeta:
         exclude = ['user']
-
-
-Tortoise.init_models(['app.{{many}}.models'], '{{many}}')
