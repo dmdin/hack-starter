@@ -19,10 +19,6 @@ def create_app(app_name: str):
     if app_name is None:
         app_name: str = click.prompt(click.style('Set the name of new app', bold=True, fg='blue'), default='default')
 
-    target_path = pathlib.Path(f'./app/{app_name}')
-    template_path = pathlib.Path('./template')
-    target_path.mkdir(parents=True, exist_ok=True)
-
     singular = p.singular_noun(app_name)
     if not singular:
         singular = app_name
@@ -33,13 +29,17 @@ def create_app(app_name: str):
         plural = app_name
     many, Many = plural.lower(), plural.capitalize()
 
+    template_path = pathlib.Path('./template')
+    target_path = pathlib.Path(f'./app/{many}')
+    target_path.mkdir(parents=True, exist_ok=True)
+
     for file_name in os.listdir(template_path):
         with open(template_path / file_name, 'r', encoding='utf8') as file:
             content = Template(file.read()).render(single=single, Single=Single, many=many, Many=Many)
         with open(target_path / file_name.rstrip('.template'), 'w', encoding='utf8') as file:
             file.write(content)
 
-    click.secho(f'Created "{app_name}", don`t forget to add new router in app.py', fg='magenta', bold=True)
+    click.secho(f'Created "{many} app", don`t forget to add new router in app.py', fg='magenta', bold=True)
 
 
 if __name__ == '__main__':
