@@ -2,7 +2,7 @@
 
 [![SvelteIcon](https://img.shields.io/static/v1?label=&message=Svelte&color=white&style=flat&logo=svelte)](https://svelte.dev/)  [![FastAPIIcon](https://img.shields.io/static/v1?label=&message=FastAPI&color=white&style=flat&logo=fastapi)](https://fastapi.tiangolo.com/) [![SwaggerIcon](https://img.shields.io/static/v1?label=&message=Swagger&color=white&style=flat&logo=swagger)](https://swagger.io/) [![DockerIcon](https://img.shields.io/static/v1?label=&message=Docker&color=white&style=flat&logo=docker)](https://www.docker.com/) [![ElectronIcon](https://img.shields.io/static/v1?label=&message=Electron&color=white&style=flat&logo=electron)](https://www.electronjs.org/)
 
-The instant start for your project with ready to use template. Choose your own unique stack to beat a competitors
+The instant start for your project with ready to use template. Choose your own unique stack to beat a competitors. Build bots and full-stack application from the box
 
 ## ⚙️ Install
 
