@@ -12,7 +12,7 @@ Download template using _git clone_ or _degit_
 $: npx degit dikower/hack-starter
 ```
 
-## 🚀 Start
+## 🚀 Startup
 
 Make sure you have installed _Docker_, then run
 
