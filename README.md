@@ -1,4 +1,4 @@
-# 🏆 Hack starter
+# 🏆 Hackathon starter
 
 [![SvelteIcon](https://img.shields.io/static/v1?label=&message=Svelte&color=white&style=flat&logo=svelte)](https://svelte.dev/)  [![FastAPIIcon](https://img.shields.io/static/v1?label=&message=FastAPI&color=white&style=flat&logo=fastapi)](https://fastapi.tiangolo.com/) [![SwaggerIcon](https://img.shields.io/static/v1?label=&message=Swagger&color=white&style=flat&logo=swagger)](https://swagger.io/) [![DockerIcon](https://img.shields.io/static/v1?label=&message=Docker&color=white&style=flat&logo=docker)](https://www.docker.com/) [![ElectronIcon](https://img.shields.io/static/v1?label=&message=Electron&color=white&style=flat&logo=electron)](https://www.electronjs.org/)
 
