@@ -33,3 +33,8 @@ maximize development speed
 * [ ] Add support of different technologies
 
     [![VueIcon](https://img.shields.io/static/v1?label=&message=Vue&color=white&style=flat&logo=vue.js)](https://vuejs.org/) [![GoLangIcon](https://img.shields.io/static/v1?label=&message=Golang&color=white&style=flat&logo=go)](https://golang.org/) [![NestJsIcon](https://img.shields.io/static/v1?label=&message=Nest&color=white&style=flat&logoColor=darkred&logo=NestJS)](https://nestjs.com/) [![ExpressIcon](https://img.shields.io/static/v1?label=&message=Express&color=white&style=flat&logoColor=black&logo=express)](https://expressjs.com/) [![DjangoIcon](https://img.shields.io/static/v1?label=&message=Django&color=white&style=flat&logoColor=darkgreen&logo=django)](https://www.djangoproject.com/) [![GraphQLIcon](https://img.shields.io/static/v1?label=&message=GraphQL&color=white&style=flat&logo=GraphQL)](https://graphql.org/) [![FlutterIcon](https://img.shields.io/static/v1?label=&message=Flutter&color=white&logoColor=blue&style=flat&logo=Flutter)](https://flutter.dev/) 
+
+## 🥰 Support
+You can always click on the ⭐️ of the repo and donate. I will be very glad for any support
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/Dikower)
