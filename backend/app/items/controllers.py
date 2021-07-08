@@ -10,8 +10,8 @@ from ..users.models import User
 router = APIRouter()
 
 
-async def check_item(item_id: str, user: User = Depends(get_user)):
-    item = await Item.get_or_none(id=item_id)
+async def check_item(id: str, user: User = Depends(get_user)):
+    item = await Item.get_or_none(id=id)
     if item is None:
         raise HTTPException(404, 'Item not found')
     if item.user_id != user.id:

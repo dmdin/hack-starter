@@ -10,8 +10,8 @@ from ..users.models import User
 router = APIRouter()
 
 
-async def check_{{single}}({{single}}_id: str, user: User = Depends(get_user)):
-    {{single}} = await {{Single}}Model.get_or_none(id={{single}}_id)
+async def check_{{single}}(id: str, user: User = Depends(get_user)):
+    {{single}} = await {{Single}}Model.get_or_none(id=id)
     if {{single}} is None:
         raise HTTPException(404, '{{Single}} not found')
     if {{single}}.user_id != user.id:

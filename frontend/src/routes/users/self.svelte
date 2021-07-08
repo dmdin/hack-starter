@@ -1,13 +1,15 @@
 <script context='module'>
   export function load({session}) {
-    console.log('Used load:', session.token)
-    return {props: {token: session.token}};
+    // console.log('Used load:', session.token)
+    // return {props: {token: session.token}};
+    return {redirect: '/items/list', status: 302};
   }
 </script>
 
 <script>
   import {goto} from '$app/navigation';
   import {token as tokenStore} from '$lib/shared';
+
   export let token;
 
   async function logout() {

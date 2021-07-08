@@ -1,7 +1,7 @@
 <script context='module'>
   export function load({session}) {
     // if (session.token) {
-    //   return {redirect: '/users/self', status: 301}
+    //   return {redirect: '/users/self', status: 302}
     // }
     return {}
   }

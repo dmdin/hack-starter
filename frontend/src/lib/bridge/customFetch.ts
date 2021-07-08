@@ -1,5 +1,5 @@
 import {Writable, writable} from 'svelte/store';
-
+import {browser} from "$app/env";
 
 export const apiUrl = 'http://localhost:8000/';
 
@@ -61,20 +61,33 @@ interface Request {
   body?: string
 }
 
+function encodeQuery(obj): string {
+  const str = [];
+  for (const p in obj)
+    // eslint-disable-next-line no-prototype-builtins
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+    }
+  return str.join('&');
+}
+
 export function storeFetch(params: StoreFetchParams): Writable<StoreFetchResult> {
-  const {url, token, method, path, json = {}, store = writable(), cache = true} = params;
-  // TODO add query params
+  const {url, token, method, path, json = {}, store = writable(), cache = browser, query = {}} = params;
   store.set(initValues());
-  const saved = localStorage.getItem(url.href);
-  const cached = saved && JSON.parse(saved);
-  if (cache && cached) {
-    // @ts-ignore
-    store.update(obj => {
-      obj.data = cached;
-      obj.ready = true;
-      obj.promise = obj.savedResolve(cached);
-      return obj;
-    });
+  const queriedUrl = url.href + '?' + encodeQuery(query)
+  const cacheKey = JSON.stringify(params)
+  if (cache) {
+    const saved = localStorage.getItem(cacheKey);
+    const cached = saved && JSON.parse(saved);
+    if (cached) {
+      // @ts-ignore
+      console.log(`Using cache for fetch ${queriedUrl}`)
+      store.update(obj => {
+        obj.data = cached;
+        obj.ready = true;
+        return obj;
+      });
+    }
   }
 
   async function load() {
@@ -93,10 +106,10 @@ export function storeFetch(params: StoreFetchParams): Writable<StoreFetchResult>
     if (method !== Methods.get) {
       request.body = JSON.stringify(json);
     }
-    const response = await fetch(url.href, request);
+    const response = await fetch(queriedUrl, request);
     const data = await response.json().catch(e => console.warn(`Exception during fetch ${path}: ${e}`));
     if (cache) {
-      localStorage.setItem(url.href, JSON.stringify(data));
+      localStorage.setItem(cacheKey, JSON.stringify(data));
     }
     return data;
   }

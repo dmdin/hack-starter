@@ -8,12 +8,15 @@ export const bridge = new Bridge('http://localhost:8000', 'token')
 
 // FIXME fix problem with updating the token
 export const token = writable(browser ? cookie.get('token') : null);
+const tokenExpiration = 1000 * 60 * 30;
+export let tokenTimer;
+
 token.subscribe(v => {
   if (v) {
-    browser ? cookie.set('token', v, {SameSite: 'Strict'}) : null;
-    console.log('Updated token:', v)
+    const now = new Date();
+    now.setTime(now.getTime() + tokenExpiration);
+    browser ? cookie.set('token', v, {SameSite: 'Strict', expires: now.toUTCString()}) : null;
   } else {
     browser ? cookie.del('token') : null;
-    console.log('Deleted token')
   }
 });
