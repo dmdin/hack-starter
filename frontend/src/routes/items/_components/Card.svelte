@@ -64,10 +64,13 @@
     border-radius: 20px;
     box-shadow: 0 0 10px 1px rgba(200, 200, 200, 0.3);
     background-color: #ffffff;
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*align-items: center;*/
+    transition: box-shadow 0.7s ease;
   }
+
+  .component:hover {
+    box-shadow: 0 0 20px 1px rgba(200, 200, 200, 0.5);
+  }
+
 
   .content {
     display: flex;
