@@ -1,7 +1,6 @@
 <script context="module" lang="ts">
   import {bridge} from "$lib/shared";
   import {get} from 'svelte/store'
-  import plus from './_components/plus.svg'
 
   export async function load({session}) {
     const {token} = session
@@ -13,23 +12,30 @@
 
 <script>
   import Card from "./_components/Card.svelte";
+  import Create from './_components/Create.svelte';
+  import plus from './_components/plus.svg';
 
   export let data;
   export let token;
 
-  // console.log(data);
+  let showModal = false;
+
   function deleteItem(i) {
-    data = [...data.slice(0, i), ...data.slice(i + 1)];
+    let item = data[i];
+    data = data.filter(i => i !== item);
+    bridge.delete({path: '/items/delete', json: item, token: token, query: {id: item.id}, cache: false})
+
   }
 
-  function editItem(i, item) {
+  async function editItem(i, item) {
     console.log(item)
     bridge.put({path: '/items/update', json: item, token: token, query: {id: item.id}, cache: false})
     data[i] = item;
   }
 
-  function createItem() {
-    bridge.put()
+  async function createItem(item) {
+    let newItem = await get(bridge.post({path: '/items/create', json: item, token: token, cache: false})).promise;
+    data = data.concat(newItem);
   }
 
   let windowWidth;
@@ -37,11 +43,14 @@
 </script>
 
 <svelte:window bind:innerWidth={windowWidth}/>
+
+<Create bind:showModal on:create={(event) => createItem(event.detail)}/>
+
 <div class="page" style="--columns: repeat(min(4, {Math.round(windowWidth / (300 + 120))}), auto)">
   {#each data as card, i (card.id)}
     <Card {...card} on:delete={() => deleteItem(i)} on:edit={(event) => editItem(i, event.detail)}/>
   {/each}
-  <button class="create-button" on:click={createItem}>
+  <button class="create-button" on:click={() => {showModal = true}}>
     <img class="create-icon" src={plus} alt="Создать">
   </button>
 </div>
@@ -69,6 +78,7 @@
     background: white;
     border: none;
     transition: box-shadow 0.7s ease;
+    cursor: pointer;
   }
 
   .create-button:hover {

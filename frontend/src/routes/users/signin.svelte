@@ -166,25 +166,6 @@
     border-color: transparent;
   }
 
-  button {
-    background-color: #131313;
-    color: #fff;
-    font-weight: 500;
-    border: none;
-    border-radius: 5px;
-    padding: 0.75em 2em;
-    transition: all 0.6s ease;
-  }
-
-  button:hover {
-    background-color: #43DFA8;
-    color: #131313;
-  }
-
-  button:focus {
-    outline: none;
-  }
-
   .buttons {
     display: flex;
     width: 100%;
