@@ -19,6 +19,7 @@
     height: 200px;
     opacity: 0;
     transition: opacity 1200ms ease-out;
+    border-radius: 10px;
   }
 
   img.loaded {

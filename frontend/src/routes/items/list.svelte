@@ -36,8 +36,8 @@
 </script>
 
 <svelte:window bind:innerWidth={windowWidth}/>
-<div class="page" style="--columns: repeat(min(4, {Math.round(windowWidth / (300 + 80))}), auto)">
-  {#each data as card, i}
+<div class="page" style="--columns: repeat(min(4, {Math.round(windowWidth / (300 + 120))}), auto)">
+  {#each data as card, i (card.id)}
     <Card {...card} on:delete={() => deleteItem(i)} on:edit={(event) => editItem(i, event.detail)}/>
   {/each}
   <button on:click={createItem}>Create</button>
