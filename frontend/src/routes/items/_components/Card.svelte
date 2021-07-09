@@ -1,7 +1,7 @@
 <script lang="ts">
   import {createEventDispatcher} from 'svelte';
   import {scale} from "svelte/transition";
-  import LazyImage from '$lib/components/ImageLoader.svelte'
+  import LazyImage from '$lib/components/ImageLoader.svelte';
 
   import trash from './trash.svg';
   import edit from './edit.svg';

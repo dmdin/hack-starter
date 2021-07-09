@@ -3,14 +3,14 @@
 
   export let src, alt;
 
-  let loaded = false
-  let thisImage
+  let loaded = false;
+  let thisImage;
 
   onMount(() => {
     thisImage.onload = () => {
-      loaded = true
-    }
-  })
+      loaded = true;
+    };
+  });
 
 </script>
 

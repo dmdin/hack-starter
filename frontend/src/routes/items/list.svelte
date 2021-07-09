@@ -1,12 +1,12 @@
 <script context="module" lang="ts">
   import {bridge} from "$lib/shared";
-  import {get} from 'svelte/store'
+  import {get} from 'svelte/store';
 
   export async function load({session}) {
-    const {token} = session
+    const {token} = session;
     const resp = get(bridge.get({path: '/items/read', token: token}));
     const data = await resp.promise;
-    return {props: {data, token}}
+    return {props: {data, token}};
   }
 </script>
 
@@ -23,13 +23,12 @@
   function deleteItem(i) {
     let item = data[i];
     data = data.filter(i => i !== item);
-    bridge.delete({path: '/items/delete', json: item, token: token, query: {id: item.id}, cache: false})
-
+    bridge.delete({path: '/items/delete', json: item, token: token, query: {id: item.id}, cache: false});
   }
 
   async function editItem(i, item) {
-    console.log(item)
-    bridge.put({path: '/items/update', json: item, token: token, query: {id: item.id}, cache: false})
+    console.log(item);
+    bridge.put({path: '/items/update', json: item, token: token, query: {id: item.id}, cache: false});
     data[i] = item;
   }
 

@@ -1,5 +1,5 @@
 <script>
-  import Modal from '$lib/components/Modal.svelte'
+  import Modal from '$lib/components/Modal.svelte';
   import {createEventDispatcher} from 'svelte';
 
   export let showModal = false;
@@ -87,6 +87,5 @@
   /*img {*/
   /*  width: 200px;*/
   /*}*/
-
 
 </style>
