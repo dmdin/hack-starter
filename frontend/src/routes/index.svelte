@@ -127,6 +127,11 @@
       text-align: center;
     }
 
+    .hero-desc {
+      font-size: 17px;
+      width: 90%;
+    }
+
     .text {
       margin-left: 0;
       margin-top: 1em;

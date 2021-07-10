@@ -1,5 +1,4 @@
 import {Writable, writable} from 'svelte/store';
-import {browser} from "$app/env";
 
 export const apiUrl = 'http://localhost:8000/';
 
@@ -72,7 +71,7 @@ function encodeQuery(obj): string {
 }
 
 export function storeFetch(params: StoreFetchParams): Writable<StoreFetchResult> {
-  const {url, token, method, path, json = {}, store = writable(), cache = browser, query = {}} = params;
+  const {url, token, method, path, json = {}, store = writable(), cache = false, query = {}} = params;
   store.set(initValues());
   const queriedUrl = url.href + '?' + encodeQuery(query)
   const cacheKey = JSON.stringify(params)

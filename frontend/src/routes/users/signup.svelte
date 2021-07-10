@@ -9,8 +9,10 @@
 
 <script>
   import {goto} from '$app/navigation';
-  import {bridge, token} from "$lib/shared";
+  import {bridge} from "$lib/shared";
   import {slide} from 'svelte/transition';
+  import {session} from '$app/stores';
+  import * as cookie from '$lib/cookies'
 
   let username = '';
   let password = '';
@@ -51,7 +53,7 @@
 
   async function submit() {
     if (!validate()) return;
-    bridge.post({path: 'users/create', json: {username, password}, cache: false, store: rsp});
+    bridge.post({path: 'users/create', json: {username, password}, store: rsp});
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     const data = await $rsp.promise;
     if (data.detail === 'User already exists') {
@@ -60,8 +62,8 @@
     } else if (!data.access_token) {
       errorMessage = 'Произошла непредвиденная ошибка'
     } else {
-      $token = data.access_token;
-      // await prefetch('/users/self');
+      $session.token = data.access_token;
+      cookie.set('token', data.access_token);
       goto('/users/self');
     }
   }

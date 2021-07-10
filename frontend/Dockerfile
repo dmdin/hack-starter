@@ -6,7 +6,7 @@ COPY src ./
 COPY static ./
 RUN npm install
 # Svelte is useless piece of bleeding edge garbage
-RUN npm i @sveltejs/kit@1.0.0-next.118
+RUN npm i @sveltejs/kit@1.0.0-next.123
 # Copy all local files into the image.
 COPY . .
 RUN npm run build

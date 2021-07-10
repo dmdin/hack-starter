@@ -23,17 +23,17 @@
   function deleteItem(i) {
     let item = data[i];
     data = data.filter(i => i !== item);
-    bridge.delete({path: '/items/delete', json: item, token: token, query: {id: item.id}, cache: false});
+    bridge.delete({path: '/items/delete', json: item, token: token, query: {id: item.id}});
   }
 
   async function editItem(i, item) {
     console.log(item);
-    bridge.put({path: '/items/update', json: item, token: token, query: {id: item.id}, cache: false});
+    bridge.put({path: '/items/update', json: item, token: token, query: {id: item.id}});
     data[i] = item;
   }
 
   async function createItem(item) {
-    let newItem = await get(bridge.post({path: '/items/create', json: item, token: token, cache: false})).promise;
+    let newItem = await get(bridge.post({path: '/items/create', json: item, token: token})).promise;
     data = data.concat(newItem);
   }
 

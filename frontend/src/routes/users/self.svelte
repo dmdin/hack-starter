@@ -8,12 +8,14 @@
 
 <script>
   import {goto} from '$app/navigation';
-  import {token as tokenStore} from '$lib/shared';
+  import * as cookie from "$lib/cookies";
+  import {session} from '$app/stores';
 
   export let token;
 
   async function logout() {
-    $tokenStore = undefined;
+    $session.token = null;
+    cookie.del('token');
     goto('/users/signin');
   }
 </script>
@@ -28,6 +30,6 @@
 </svelte:head>
 
 <p>My token: {token}</p>
-<p>My token: {$tokenStore}</p>
 
-<button on:click={logout}>Logout</button>
+
+<button on:click={logout}>Выйти</button>
