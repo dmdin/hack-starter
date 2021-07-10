@@ -39,6 +39,7 @@
   header {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
   }
 
   a {

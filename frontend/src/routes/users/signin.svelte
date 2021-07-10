@@ -71,7 +71,7 @@
 <div class='main-block'>
 
   <!-- svelte-ignore a11y-missing-attribute -->
-  <img src="https://static.tildacdn.com/tild3232-6435-4164-b565-313266623131/space.svg" alt="auth-img"/>
+  <img src="https://static.tildacdn.com/tild3232-6435-4164-b565-313266623131/space.svg" alt="auth"/>
   <div class='wrapper'>
     <h1>Зайти в <span class="green">пространство</span></h1>
     <div class='form'>

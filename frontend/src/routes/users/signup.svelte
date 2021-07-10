@@ -8,7 +8,7 @@
 </script>
 
 <script>
-  import {goto, prefetch} from '$app/navigation';
+  import {goto} from '$app/navigation';
   import {bridge, token} from "$lib/shared";
   import {slide} from 'svelte/transition';
 
@@ -80,7 +80,7 @@
 <div class='main-block'>
 
   <!-- svelte-ignore a11y-missing-attribute -->
-  <img src='https://static.tildacdn.com/tild6362-3166-4430-b466-346266653936/reg.svg' alt='reg-photo'/>
+  <img src='https://static.tildacdn.com/tild6362-3166-4430-b466-346266653936/reg.svg' alt='registration'/>
   <div class='wrapper'>
     <h1>Регистрация в наш <span class='green'>сервис</span></h1>
     <div class='form'>

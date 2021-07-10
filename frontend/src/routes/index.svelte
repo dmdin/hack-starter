@@ -17,7 +17,7 @@
 
 
 <div class="main">
-  <img src="https://static.tildacdn.com/tild3866-6533-4062-a461-663039383531/Done.svg" alt=""/>
+  <img class="hero-img" src="https://static.tildacdn.com/tild3866-6533-4062-a461-663039383531/Done.svg" alt="done"/>
   <div class="text">
     <h1 class="hero-title">Hack<span class="green">Masters</span></h1>
     <h3 class="hero-desc">Команда специалистов-энтузитастов, знающих свое дело. За нами множество побед в хакатонах и мы
@@ -29,20 +29,20 @@
   <h1>✋ Можно <span class="green">познакомиться?</span></h1>
   <div class="cards">
     <div class="card">
-      <img src="https://static.tildacdn.com/tild3635-6139-4532-b331-326666666563/Video_Call.svg" alt="developer-image">
+      <img src="https://static.tildacdn.com/tild3635-6139-4532-b331-326666666563/Video_Call.svg" alt="developer">
       <h3>Cooбщество</h3>
       <p>Наш приоритет — удобное и веселое взаимодействие участников с организаторами и между собой.
         Ведь хакатоны в первую очередь сбор сообщества, а не просто работа над задачей</p>
     </div>
     <div class="card">
       <img src="https://static.tildacdn.com/tild3639-3462-4532-b466-366334663330/Group_14.svg"
-           alt="new-analytics-image">
+           alt="new-analytics">
       <h3>Удобная работа с данными</h3>
       <p>Сбор обратной связи по результам мероприятия, подготовка отчетов с краткой сводкой по участникам,
         база резюме и много еще полезного</p>
     </div>
     <div class="card">
-      <img src="https://static.tildacdn.com/tild3636-6230-4461-b039-336231653933/Group_2.svg" alt="not-it-image">
+      <img src="https://static.tildacdn.com/tild3636-6230-4461-b039-336231653933/Group_2.svg" alt="not-it">
       <h3>Автоматизация</h3>
       <p>Больше не надо тратить свое время на такие рутинные задачи как распределение участников по трекам или
         подготовка сертификатов. Система все сделает за вас, наслаждайтесь общением с участниками</p>
@@ -56,6 +56,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
     height: 100vh;
   }
 
@@ -72,8 +73,10 @@
     text-align: left;
   }
 
-  img {
-    max-width: 100%;
+  .hero-img {
+    width: 50%;
+    max-width: 600px;
+    min-width: 350px;
   }
 
   h1 {
@@ -118,7 +121,6 @@
   @media (max-width: 850px) {
     .main {
       flex-direction: column;
-      padding: 2em;
     }
 
     .hero-title {

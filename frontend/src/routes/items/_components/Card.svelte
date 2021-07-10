@@ -33,7 +33,7 @@
       <textarea class="desc" bind:value={desc}></textarea>
     {:else}
       <div class="image-wrapper">
-        <LazyImage src={pic} alt="{name}-picture"/>
+        <LazyImage src={pic} alt="{name}"/>
       </div>
       <h1 class="title">{name}</h1>
       <p class="desc">{desc}</p>
