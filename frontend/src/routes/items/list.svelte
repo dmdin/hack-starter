@@ -13,7 +13,7 @@
 <script>
   import Card from "./_components/Card.svelte";
   import Create from './_components/Create.svelte';
-  import plus from './_components/plus.svg';
+  import plus from './_assets/plus.svg';
 
   export let data;
   export let token;
@@ -41,6 +41,14 @@
 
 </script>
 
+<svelte:head>
+  <title>Каталог</title>
+  <link rel="icon" href="data:image/svg+xml,
+    <svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22>
+    <text y=%22.9em%22 font-size=%2290%22>📃</text>
+    </svg>"
+  >
+</svelte:head>
 <svelte:window bind:innerWidth={windowWidth}/>
 
 <Create bind:showModal on:create={(event) => createItem(event.detail)}/>
