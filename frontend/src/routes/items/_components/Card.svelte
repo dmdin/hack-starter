@@ -154,7 +154,7 @@
   }
 
   textarea, p {
-    height: 70px;
+    height: 75px;
     hyphens: auto;
     font-family: Arial sans-serif;
     line-height: 1.3;
