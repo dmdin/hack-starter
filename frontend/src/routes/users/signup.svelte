@@ -19,7 +19,9 @@
   let confirm = '';
   let errorMessage = null;
   let errors = {username: false, password: false, confirm: false}
-  let rsp = bridge.createStore();
+  let rsp;
+
+  // let rsp = bridge.createStore();
 
   function validate() {
     if (username === '') {

@@ -9,10 +9,20 @@
 
 <script lang="ts">
   import '../app.css';
-  import PageTransition from '$lib/PageTransition.svelte'
+  import PageTransition from '$lib/components/PageTransition.svelte';
+  // import ErrorLabel from '$lib/components/ErrorLabel.svelte';
+  import {session} from '$app/stores';
+  import * as cookie from '$lib/cookies';
+  import {goto} from '$app/navigation';
 
   export let token;
   export let key;
+
+  async function logout() {
+    $session.token = null;
+    cookie.del('token');
+    goto('/users/signin');
+  }
 </script>
 
 <header>
@@ -20,11 +30,13 @@
   <a href="/users/signin">Вход</a>
   <a href="/users/signup">Регистрация</a>
   <a class:disabled={!token} href={token ? "/items/list" : ""}>Каталог</a>
+  <button on:click={logout}>Выход</button>
 </header>
 
 <main>
   <PageTransition refresh={key}>
     <slot/>
+    <!--    <ErrorLabel/>-->
   </PageTransition>
 </main>
 
@@ -60,6 +72,19 @@
 
   .disabled:hover {
     color: #b1b1b1;
+  }
+
+  button {
+    margin-left: 10px;
+    padding: 7px;
+    background-color: transparent;
+    color: black;
+    border-color: black;
+  }
+
+  button:hover {
+    background-color: black;
+    color: white;
   }
 
   .header-logo {

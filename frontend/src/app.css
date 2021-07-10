@@ -105,7 +105,7 @@ button {
   background-color: #131313;
   color: #fff;
   font-weight: 500;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 5px;
   padding: 0.75em 2em;
   transition: all 0.6s ease;
