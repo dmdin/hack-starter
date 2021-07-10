@@ -1,7 +1,8 @@
 <script context="module">
-  export const load = async ({page}) => ({
+  export const load = async ({page, session}) => ({
     props: {
       key: page.path,
+      token: session.token
     },
   })
 </script>
@@ -10,10 +11,16 @@
   import '../app.css';
   import PageTransition from '$lib/PageTransition.svelte'
 
+  export let token;
   export let key;
 </script>
 
-<!--<Header/>-->
+<header>
+  <a href="/"><h1 class="header-logo">Hack<span class="green">Masters</span></h1></a>
+  <a href="/users/signin">Вход</a>
+  <a href="/users/signup">Регистрация</a>
+  <a class:disabled={!token} href={token ? "/items/list" : ""}>Каталог</a>
+</header>
 
 <main>
   <PageTransition refresh={key}>
@@ -21,9 +28,6 @@
   </PageTransition>
 </main>
 
-<!--<footer>-->
-<!--	<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>-->
-<!--</footer>-->
 
 <style>
   main {
@@ -32,21 +36,41 @@
     margin: 0 auto;
   }
 
-  footer {
+  header {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 40px;
   }
 
-  footer a {
-    font-weight: bold;
+  a {
+    margin: 0 10px;
+    color: #5b5b5b;
+    transition: color 0.4s ease;
   }
 
-  @media (min-width: 480px) {
-    footer {
-      padding: 40px 0;
-    }
+  a:hover {
+    color: black;
+    text-decoration: none;
+  }
+
+  .disabled {
+    color: #b1b1b1;
+    cursor: default;
+  }
+
+  .disabled:hover {
+    color: #b1b1b1;
+  }
+
+  .header-logo {
+    font-size: 20px;
+    width: 150px;
+  }
+
+  h1 {
+    font-weight: 700;
+  }
+
+  .green {
+    color: #43DFA8;
   }
 </style>

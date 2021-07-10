@@ -17,6 +17,11 @@
     goto('/users/signin');
   }
 </script>
+
+<svelte:head>
+  <title>Профиль</title>
+</svelte:head>
+
 <p>My token: {token}</p>
 <p>My token: {$tokenStore}</p>
 

@@ -60,7 +60,7 @@
 </script>
 
 <svelte:head>
-  <title>Регистрация</title>
+  <title>Вход</title>
 </svelte:head>
 
 <div class='main-block'>

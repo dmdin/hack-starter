@@ -18,7 +18,7 @@
 <div class="component"
      on:mouseover={() => hovered = true}
      on:mouseout={() => hovered = false}
-     transition:scale>
+     transition:scale|local>
   <div class="content">
     {#if editMode}
       <div class="edit-image"
