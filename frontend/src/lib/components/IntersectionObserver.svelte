@@ -40,10 +40,12 @@
   });
 </script>
 
-<style>
-
-</style>
-
 <div bind:this={container}>
   <slot {intersecting}/>
 </div>
+
+<style>
+  div {
+    height: 100%;
+  }
+</style>

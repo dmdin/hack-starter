@@ -95,6 +95,7 @@
   .image-wrapper {
     margin: 0 auto;
     width: 100%;
+    max-width: 300px;
     height: 200px;
     display: grid;
     place-items: center;

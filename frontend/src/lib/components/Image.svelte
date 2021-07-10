@@ -16,7 +16,8 @@
 
 <style>
   img {
-    height: 200px;
+    max-width: 100%;
+    max-height: 100%;
     opacity: 0;
     transition: opacity 1200ms ease-out;
     border-radius: 10px;
