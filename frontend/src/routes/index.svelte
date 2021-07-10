@@ -3,7 +3,7 @@
 </script>
 
 <script>
-
+  import {goto} from '$app/navigation';
 </script>
 
 <svelte:head>
@@ -22,7 +22,7 @@
     <h1 class="hero-title">Hack<span class="green">Masters</span></h1>
     <h3 class="hero-desc">Команда специалистов-энтузитастов, знающих свое дело. За нами множество побед в хакатонах и мы
       используем только передовые технологии</h3>
-    <button>Узнать о нас</button>
+    <button on:click={() => goto('/users/signup')}>Узнать о нас</button>
   </div>
 </div>
 <div class="about">

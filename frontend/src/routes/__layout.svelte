@@ -29,7 +29,7 @@
   <a href="/"><h1 class="header-logo">Hack<span class="green">Masters</span></h1></a>
   <a href="/users/signin">Вход</a>
   <a href="/users/signup">Регистрация</a>
-  <a class:disabled={!token} href={token ? "/items/list" : ""}>Каталог</a>
+  <a class:disabled={!token} href={token ? "/items/list" : "#"}>Каталог</a>
   <button on:click={logout}>Выход</button>
 </header>
 

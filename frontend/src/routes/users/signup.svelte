@@ -19,9 +19,7 @@
   let confirm = '';
   let errorMessage = null;
   let errors = {username: false, password: false, confirm: false}
-  let rsp;
-
-  // let rsp = bridge.createStore();
+  let rsp = bridge.createStore();
 
   function validate() {
     if (username === '') {
@@ -113,7 +111,7 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    height: 100vh;
+    height: 90vh;
   }
 
   img {
