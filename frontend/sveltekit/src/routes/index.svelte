@@ -141,9 +141,5 @@
     .cards {
       flex-direction: column;
     }
-
-    .card {
-
-    }
   }
 </style>
