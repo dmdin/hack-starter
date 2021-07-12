@@ -179,7 +179,6 @@
   }
 
   @media (max-width: 1000px) {
-
     .main-block {
       flex-direction: column;
       height: 100%;

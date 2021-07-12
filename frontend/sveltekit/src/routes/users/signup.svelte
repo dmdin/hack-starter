@@ -134,6 +134,7 @@
 
   .wrapper {
     width: 90%;
+    max-width: 360px;
     display: flex;
     flex-direction: column;
     align-items: center;
