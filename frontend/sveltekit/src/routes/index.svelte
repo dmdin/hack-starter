@@ -122,6 +122,7 @@
   @media (max-width: 850px) {
     .main {
       flex-direction: column;
+      justify-content: flex-start;
     }
 
     .hero-title {
