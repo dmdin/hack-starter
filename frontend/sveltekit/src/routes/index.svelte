@@ -25,6 +25,7 @@
     <button on:click={() => goto('/users/signup')}>Узнать о нас</button>
   </div>
 </div>
+
 <div class="about">
   <h1>✋ Можно <span class="green">познакомиться?</span></h1>
   <div class="cards">
@@ -54,7 +55,6 @@
 <style>
   .main {
     display: flex;
-    justify-content: center;
     align-items: center;
     width: 100%;
     height: 100vh;
@@ -76,7 +76,7 @@
   .hero-img {
     width: 50%;
     max-width: 600px;
-    min-width: 350px;
+    min-width: 230px;
   }
 
   h1 {
@@ -125,6 +125,7 @@
 
     .hero-title {
       text-align: center;
+      margin: 0;
     }
 
     .hero-desc {
@@ -135,6 +136,9 @@
     .text {
       margin-left: 0;
       margin-top: 1em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
     }
 

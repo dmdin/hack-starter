@@ -124,6 +124,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 90%;
+    max-width: 360px;
   }
 
   .form {
@@ -131,17 +133,14 @@
     flex-direction: column;
     max-width: 360px;
     width: 100%;
-    /*margin: 0 auto;*/
-    /*align-items: center;*/
   }
 
   input {
-    max-width: 300px;
-    width: 100%;
+    width: 90%;
     height: 48px;
     margin-bottom: 0.5em;
     border-radius: 8px;
-    padding: 0 30px;
+    padding: 0 5%;
     border: 1px solid #E1E3E6;
     transition: all 0.6s ease;
   }
@@ -183,10 +182,18 @@
 
     .main-block {
       flex-direction: column;
+      height: 100%;
     }
 
     h1 {
       text-align: center;
+    }
+  }
+
+  @media (max-width: 360px) {
+    button, a {
+      padding: 10px;
+      font-size: 15px;
     }
   }
 

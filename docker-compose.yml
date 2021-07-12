@@ -6,7 +6,7 @@ services:
   #      - "11211:11211"
 
   frontend:
-    build: ./frontend/sveltekit
+    build: ${FRONTEND_DIR}
     ports:
       - 3000:3000
     labels:
@@ -16,7 +16,7 @@ services:
       - "traefik.http.routers.front.tls.certResolver=letsEncrypt"
 
   backend:
-    build: ./backend/fastapi
+    build: ${BACKEND_DIR}
     environment:
       - DOMAIN=b.${DOMAIN}
     ports:

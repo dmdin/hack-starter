@@ -133,6 +133,7 @@
   }
 
   .wrapper {
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -148,12 +149,11 @@
   }
 
   input {
-    max-width: 300px;
-    width: 100%;
+    width: 90%;
     height: 48px;
     margin-bottom: 0.5em;
     border-radius: 8px;
-    padding: 0 30px;
+    padding: 0 5%;
     border: 1px solid #E1E3E6;
     transition: all 0.6s ease;
   }
@@ -211,13 +211,29 @@
   }
 
   @media (max-width: 1000px) {
+    img {
+      /*height: 100%;*/
+    }
 
     .main-block {
       flex-direction: column;
+      height: 100%;
     }
 
     h1 {
       text-align: center;
+    }
+  }
+
+  @media (max-width: 360px) {
+    img {
+      width: 70%;
+      z-index: 0;
+    }
+
+    button, a {
+      padding: 10px;
+      font-size: 15px;
     }
   }
 
