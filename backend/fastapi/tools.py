@@ -39,7 +39,7 @@ def create_app(app_name: str):
         with open(target_path / file_name.rstrip('.template'), 'w', encoding='utf8') as file:
             file.write(content)
 
-    click.secho(f'Created "{many} app", don`t forget to init it in app.py', fg='magenta', bold=True)
+    click.secho(f'Created app "{many}"', fg='magenta', bold=True)
 
 
 if __name__ == '__main__':

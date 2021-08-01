@@ -6,8 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from rich.console import Console
 from tortoise import Tortoise
 
-from . import items, users
-from .settings import CORS_ORIGINS, DOMAIN, IS_PROD, PROD_TORTOISE_ORM, TEST_TORTOISE_ORM
+from . import users
+from .settings import apps, CORS_ORIGINS, DOMAIN, IS_PROD, PROD_TORTOISE_ORM, TEST_TORTOISE_ORM
 
 # print(COLOR_SYSTEMS)
 console = Console(color_system="windows")
@@ -37,7 +37,7 @@ async def startup():
         await Tortoise.init(config=config_var)
         await Tortoise.generate_schemas(safe=True)
     except Exception as ex:
-        print(ex)
+        console.print('Error:', ex, style='bold red')
 
 
 async def shutdown():
@@ -58,7 +58,12 @@ def create_app():
 
     # Init order is important! Init required apps firstly
     users.init(app)
-    items.init(app)
+
+    for module in apps:
+        if module == 'users':
+            continue
+        module = __import__(f'app.{module}', fromlist=[module])
+        module.init(app)
 
     app.add_event_handler("startup", startup)
     app.add_event_handler("shutdown", shutdown)

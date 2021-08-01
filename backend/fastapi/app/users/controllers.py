@@ -27,7 +27,7 @@ async def login(login_data: UserData):
     return Token(access_token=access_token, token_type='Bearer')
 
 
-@router.post('/create', response_model=Token)
+@router.post('/', response_model=Token)
 async def new_user(reg_data: UserData):
     user = await User.get_or_none(email=reg_data.username)
     if user is not None:

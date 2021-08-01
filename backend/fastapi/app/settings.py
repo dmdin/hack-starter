@@ -10,7 +10,12 @@ with open(os.path.join(current_path, '.gitignore'), 'r', encoding='utf8') as fil
 folders = list(
     set([folder.replace('\\', '/').replace("app/", "").strip('/') for folder in glob('app/*/')]) - exclude
 )
-apps = {
+
+apps = [
+    folder.replace("/", ".") for folder in folders
+]
+
+tortoise_apps = {
     folder: {
         'models': [f'app.{folder.replace("/", ".")}.models']
     }
@@ -19,13 +24,13 @@ apps = {
 
 PROD_TORTOISE_ORM = {
     'connections': {'default': f'sqlite://{current_path}/db/prod/db.sqlite3'},
-    'apps': apps,
+    'apps': tortoise_apps,
     # 'apps': {'models': model_paths},
 }
 
 TEST_TORTOISE_ORM = {
     'connections': {'default': f'sqlite://{current_path}/db/test/db.sqlite3'},
-    'apps': apps,
+    'apps': tortoise_apps,
     # 'apps': {'models': model_paths},
 }
 

@@ -24,25 +24,25 @@ async def get_all():
     return await ItemsSchema.from_queryset(Item.all())
 
 
-@router.post('/create', response_model=ItemsSchema)
+@router.post('/', response_model=ItemsSchema)
 async def create_item(new_item: CreateItem, user: User = Depends(get_user)):
     item = await Item.create(**new_item.dict(), user_id=user.id)
     return await ItemsSchema.from_tortoise_orm(item)
 
 
-@router.get('/read', response_model=List[ItemsSchema])
-async def get_my(user: User = Depends(get_user)):
-    return await ItemsSchema.from_queryset(user.items.all())
+@router.get('/{id}', response_model=ItemsSchema)
+async def get_my(item: Item = Depends(check_item)):
+    return await ItemsSchema.from_tortoise_orm(item)
 
 
-@router.put('/update', response_model=ItemsSchema)
+@router.put('/', response_model=ItemsSchema)
 async def edit_item(edited_item: CreateItem, item: Item = Depends(check_item)):
     await item.update_from_dict(edited_item.dict())
     await item.save()
     return await ItemsSchema.from_tortoise_orm(item)
 
 
-@router.delete('/delete')
+@router.delete('/')
 async def delete_item(item: Item = Depends(check_item)):
     await item.delete()
     return DeleteSuccess(ok=True)
